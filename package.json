@@ -12,7 +12,9 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "superagent": "^3.8.2",
+    "superagent-promise": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

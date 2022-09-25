@@ -1,0 +1,9 @@
+export const APP_LOAD = 'APP_LOAD';
+export const REDIRECT = 'REDIRECT';
+export const SERVER_SUBMITTED = 'SERVER_SUBMITTED';
+export const SERVER_SAVED = 'SERVER_SAVED';
+export const PING_SERVER = 'PING_SERVER';
+export const ANIMATE_GRAPHS = 'ANIMATE_GRAPHS'
+export const CHANGE_SERVER = 'CHANGE_SERVER';
+export const ASYNC_START = 'ASYNC_START';
+export const ASYNC_END = 'ASYNC_END';
