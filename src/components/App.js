@@ -1,8 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Switch } from 'react-router-dom';
-import { APP_LOAD, REDIRECT } from '../../constants/actionTypes';
 import React from 'react';
+import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+
+import agent from '../agent';
+import Home from './home/Home';
+import Status from './status/Status'; 
+import { connect } from 'react-redux';
+import { store, history } from '../store';
 
 const mapStateToProps = state => {
   return {
@@ -13,40 +17,48 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, token) =>
-    dispatch({ type: APP_LOAD, payload, token, skipTracking: true}),
+  onLoad: server =>
+    dispatch({ type: APP_LOAD, server}),
   onRedirect: () =>
     dispatch({ type: REDIRECT })
 });
 
 class App extends React.Component {
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (nextProps.redirectTo) {
-      store.dispatch(push(nextProps.redirectTo));
+      store.dispatch(this.props.history.push(nextProps.redirectTo));
       this.props.onRedirect();
     }
   }
 
   componentDidMount() {
-    // TODO determine if needed
+    const server = window.localStorage.getItem('server');
+    if (server) {
+      agent.setServer(server);
+    }
+    this.props.onLoad(server);
   }
 
   render() {
+    console.log(this.props.appLoaded)
     if (this.props.appLoaded) {
       return(
-        <div>
-          <Header
-            appName={this.props.appName}
-            currentUser={this.props.currentUser}
-          />
-          <Switch>
-            <Route exact path="/" component={Home}/>
-          </Switch>
-        </div>
-      )
+        <BrowserRouter history={history}>
+          <div>
+            <Routes>
+              <Route path="/" component={Home}/>
+              <Route path="/status/:server" component={Status}/>
+            </Routes>
+          </div>
+        </BrowserRouter> 
+      );
     }
+    return (
+      <div>
+      </div>
+    )
   }
 
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

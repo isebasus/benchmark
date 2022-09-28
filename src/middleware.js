@@ -4,7 +4,8 @@ import {
     ASYNC_START,
     ASYNC_END,
     SERVER_SUBMITTED,
-    CHANGE_SERVER
+    CHANGE_SERVER,
+    STATUS_PAGE_RELOAD
 } from './constants/actionTypes'
 
 const promiseMiddleware = store => next => action => {
@@ -33,12 +34,14 @@ const promiseMiddleware = store => next => action => {
 }
 
 const localStorageMiddleware = store => next => action => {
-    if (action.type === SERVER_SUBMITTED)  {
+    if (action.type === SERVER_SUBMITTED || action.type === STATUS_PAGE_RELOAD)  {
         if (!action.error) {
             window.localStorage.setItem('server', action.payload)
+            agent.setServer(action.payload)
         }
     } else if (action.type === CHANGE_SERVER) {
         window.localStorage.setItem('server', '');
+        agent.setServer(null)
     }
     next(action);
 }
