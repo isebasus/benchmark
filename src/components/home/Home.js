@@ -43,16 +43,19 @@ class Home extends React.Component {
             ev.preventDefault();
             const server = {
                 hostname: this.props.hostname,
-                port: this.props.port,
-                protocolVersion: this.props.protocolVersion
+                port: parseInt(this.props.port),
+                protocolVersion: parseInt(this.props.protocolVersion)
             };
 
+            console.log(server);
+
             const payload = agent.ServerStatus.initializeServer(server);
+            console.log("payload: " + payload)
             this.props.onSubmit(payload);
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.onLoad()
     }
 
@@ -62,7 +65,6 @@ class Home extends React.Component {
 
     // TODO make some magic here
     render() {
-        console.log("here at home")
         return (
             <div>
                 <form>
@@ -80,8 +82,7 @@ class Home extends React.Component {
                   <fieldset className="form-group">
                     <input
                       className="form-control"
-                      type="text"
-                      placeholder="port"
+                      type="number"
                       value={this.props.port}
                       onChange={this.changePort} />
                   </fieldset>
@@ -89,8 +90,7 @@ class Home extends React.Component {
                   <fieldset className="form-group">
                     <textarea
                       className="form-control"
-                      rows="8"
-                      placeholder="protocol version: 760"
+                      type="number"
                       value={this.props.protocolVersion}
                       onChange={this.changeProtocolVersion}>
                     </textarea>

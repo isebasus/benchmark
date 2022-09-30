@@ -8,8 +8,9 @@ import {
     STATUS_PAGE_RELOAD
 } from './constants/actionTypes'
 
-const promiseMiddleware = store => next => action => {
+const apiMiddleware = store => next => action => {
     if (isPromise(action.payload)) {
+        console.log(action.payload);
         store.dispatch({ type: ASYNC_START, subtype: action.type });
 
         action.payload.then(
@@ -50,4 +51,4 @@ function isPromise(v) {
     return v && typeof v.then === 'function';
 }
 
-export { promiseMiddleware, localStorageMiddleware }
+export { apiMiddleware, localStorageMiddleware }

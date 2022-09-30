@@ -1,6 +1,6 @@
 import React from 'react';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import agent from '../agent';
 import Home from './home/Home';
@@ -40,17 +40,14 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.appLoaded)
     if (this.props.appLoaded) {
       return(
-        <BrowserRouter history={history}>
-          <div>
+        <Router history={history}>
             <Routes>
-              <Route path="/" component={Home}/>
-              <Route path="/status/:server" component={Status}/>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/status/:server" element={<Status/>}/>
             </Routes>
-          </div>
-        </BrowserRouter> 
+        </Router> 
       );
     }
     return (
