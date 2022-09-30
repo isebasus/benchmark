@@ -19,7 +19,9 @@ const requests = {
 
 const ServerStatus = {
     initializeServer: (server) =>
-        requests.post('/v1/server', server)
+        requests.post('/v1/init', server),
+    pingServer: (server) =>
+        requests.post('/v1/ping', server)
 };
 
 export default {

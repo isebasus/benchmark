@@ -13,8 +13,9 @@ export default (state = {}, action) => {
                 appLoaded: true
             };
         case SERVER_SUBMITTED:
-            const redirectURL = action.error ? null : `/status/${action.payload.hostname}`;
-            return { ...state, redirectTo: redirectURL}
+            var data = JSON.parse(action.payload)
+            const redirectURL = action.error ? null : `/status/${data.hostname}`;
+            return { ...state, redirectTo: redirectURL, server: data}
         case CHANGE_SERVER:
             const redirecURL = action.error ? null : '/';
             return { ...state, redirectTo: redirecURL };
