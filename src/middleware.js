@@ -5,7 +5,8 @@ import {
     ASYNC_END,
     SERVER_SUBMITTED,
     CHANGE_SERVER,
-    STATUS_PAGE_RELOAD
+    STATUS_PAGE_RELOAD,
+    SERVER_SET
 } from './constants/actionTypes'
 
 const apiMiddleware = store => next => action => {
@@ -37,8 +38,13 @@ const apiMiddleware = store => next => action => {
 const localStorageMiddleware = store => next => action => {
     if (action.type === SERVER_SUBMITTED || action.type === STATUS_PAGE_RELOAD)  {
         if (!action.error) {
-            window.localStorage.setItem('server', action.payload)
+            var data = JSON.parse(action.payload);
+
+            window.localStorage.setItem('server', data)
             agent.setServer(action.payload)
+
+            const hostname = data.hostname;
+            store.dispatch({ type: SERVER_SET, hostname})
         }
     } else if (action.type === CHANGE_SERVER) {
         window.localStorage.setItem('server', '');

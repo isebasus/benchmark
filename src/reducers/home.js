@@ -13,8 +13,7 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 hostname: '',
-                port: 0,
-                protocolVersion: 0
+                port: 0
             };
         case HOME_PAGE_UNLOADED:
             return {};

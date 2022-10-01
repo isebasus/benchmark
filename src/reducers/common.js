@@ -1,7 +1,8 @@
 import {
     APP_LOAD,
-    CHANGE_SERVER,
-    SERVER_SUBMITTED
+    REDIRECT,
+    SERVER_SET,
+    CHANGE_SERVER
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -12,10 +13,11 @@ export default (state = {}, action) => {
                 server: action.server || null,
                 appLoaded: true
             };
-        case SERVER_SUBMITTED:
-            var data = JSON.parse(action.payload)
-            const redirectURL = action.error ? null : `/status/${data.hostname}`;
-            return { ...state, redirectTo: redirectURL, server: data}
+        case REDIRECT:
+            return { ...state, redirectTo: null };
+        case SERVER_SET:
+            const redirectURL = action.error ? null : `/status/${action.hostname}`;
+            return { ...state, redirectTo: redirectURL}
         case CHANGE_SERVER:
             const redirecURL = action.error ? null : '/';
             return { ...state, redirectTo: redirecURL };

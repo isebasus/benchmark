@@ -37,20 +37,15 @@ class Home extends React.Component {
 
         this.changeHostname = updateFieldEvent('hostname');
         this.changePort = updateFieldEvent('port');
-        this.changeProtocolVersion = updateFieldEvent('protocolVersion');
 
         this.submitServer = ev => {
             ev.preventDefault();
             const server = {
                 hostname: this.props.hostname,
-                port: parseInt(this.props.port),
-                protocolVersion: parseInt(this.props.protocolVersion)
+                port: parseInt(this.props.port)
             };
 
-            console.log(server);
-
             const payload = agent.ServerStatus.initializeServer(server);
-            console.log("payload: " + payload)
             this.props.onSubmit(payload);
         }
     }
@@ -85,15 +80,6 @@ class Home extends React.Component {
                       type="number"
                       value={this.props.port}
                       onChange={this.changePort} />
-                  </fieldset>
-
-                  <fieldset className="form-group">
-                    <textarea
-                      className="form-control"
-                      type="number"
-                      value={this.props.protocolVersion}
-                      onChange={this.changeProtocolVersion}>
-                    </textarea>
                   </fieldset>
 
                   <button
