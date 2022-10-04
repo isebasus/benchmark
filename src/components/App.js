@@ -1,6 +1,7 @@
 import React from 'react';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import { push } from 'react-router-redux';
 
 import agent from '../agent';
 import Home from './home/Home';
@@ -24,13 +25,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class App extends React.Component {
-  componentDidUpdate(nextProps) {
-    if (nextProps.redirectTo) {
-      store.dispatch(history.push(nextProps.redirectTo));
-      this.props.onRedirect();
-    }
-  }
-
   componentDidMount() {
     const server = window.localStorage.getItem('server');
     if (server) {

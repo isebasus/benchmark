@@ -1,7 +1,6 @@
-import superagentPromise from 'superagent-promise'
-import _superagent from 'superagent'
-
-const superagent = superagentPromise(_superagent, global.Promise);
+/*
+ * Requests API
+ */
 
 const API_ROOT = 'http://localhost:8080'
 const responseBody = response => response.text();
@@ -14,7 +13,8 @@ const requests = {
             method: "POST",
             headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(body)
-        }).then(responseBody)
+        })
+        .then(responseBody)
 };
 
 const ServerStatus = {

@@ -1,8 +1,6 @@
 import {
     APP_LOAD,
-    REDIRECT,
-    SERVER_SET,
-    CHANGE_SERVER
+    ASYNC_END
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -13,14 +11,12 @@ export default (state = {}, action) => {
                 server: action.server || null,
                 appLoaded: true
             };
-        case REDIRECT:
-            return { ...state, redirectTo: null };
-        case SERVER_SET:
-            const redirectURL = action.error ? null : `/status/${action.hostname}`;
-            return { ...state, redirectTo: redirectURL}
-        case CHANGE_SERVER:
-            const redirecURL = action.error ? null : '/';
-            return { ...state, redirectTo: redirecURL };
+        case ASYNC_END:
+            return {
+                ...state,
+                inProgress: false,
+                errors: action.error ? action.payload.errors : null
+            }
         default:
             return state;
     }

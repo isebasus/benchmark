@@ -1,8 +1,9 @@
 import {
     STATUS_PAGE_LOADED,
-    STATUS_PAGE_RELOAD,
+    STATUS_PAGE_UNLOADED,
     PING_SERVER,
-    ASYNC_START
+    ASYNC_START,
+    ASYNC_END
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
@@ -11,13 +12,13 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 server: action.server || null,
-                statusLoaded: true
+                hostname: action.host || null,
+                port: action.port || null,
+                statusLoaded: true,
+                inProgress: false
             };
-        case STATUS_PAGE_RELOAD:
-            return {
-                ...state,
-                statusLoaded: true
-            };
+        case STATUS_PAGE_UNLOADED:
+            return {};
         case PING_SERVER:
             return {
                 ...state,
@@ -25,10 +26,10 @@ export default (state = {}, action) => {
                 errors: action.error ? action.payload.errors : null
             };
         case ASYNC_START:
-            return {
-                ...state,
-                inProgress: true
-            };
+            if (action.subtype == PING_SERVER) {
+                return {...state, inProgress: true};
+            }
+            return state;
         default:
             return state
     }

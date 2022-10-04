@@ -27,7 +27,7 @@ export default (state = {}, action) => {
             if (action.subtype == SERVER_SUBMITTED) {
                 return {...state, inProgress: true};
             }
-            break;
+            return state;
         case UPDATE_FIELD_EVENT:
             return { ...state, [action.key]: action.value };
         default:
